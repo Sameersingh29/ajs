@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>First name + Last Name</title>
+        <script src ="angular.min.js"></script>
+    </head>
+    <body ng-app="program1">
+        <h1>Angular JS program to display the full name</h1>
+        <div ng-controller="ShowFNController">
+            Enter first Name:
+            <input type="text" ng-model="fn"/><br><br>
+            
+            Enter last Name:
+            <input type="text" ng-model="ln"/><br><br>
+
+            My full name is {{fn+" "+ln}}
+            
+        </div>
+    </body>
+</html>
+
+<script>
+    var myVar = angular.module("program1",[]);
+    myVar.controller("ShowFNController",function($scope){
+        $scope.fn="Sameer";
+        $scope.ln="Singh";
+    });
+</script>

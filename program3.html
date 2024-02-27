@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculator</title>
+    <script src="angular.min.js"></script>
+</head>
+
+<body ng-app="calciApp">
+
+    <h1>AngularJS Simple Calculator</h1>
+
+    <div ng-controller="calciCtrl">
+
+        Enter first number: <input type="number" id="num1" placeholder="0" ng-model="num1"> <br> <br>
+
+        Select the operator: <select id="operator" ng-model="operator">
+            <option value="">Select</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select> <br> <br>
+
+        Enter second number: <input type="number" id="num2" placeholder="0" ng-model="num2"> <br> <br>
+
+        <button type="submit" ng-click="compute()">Compute</button> <br> <br>
+
+        The result is  <b id="res">{{num1 + " " + operator + " " + num2 + " = " + result}}</b>
+
+    </div>
+</body>
+<script>
+    var app = angular.module("calciApp", []);
+    app.controller("calciCtrl", function($scope) {
+
+        $scope.compute = function() {
+            switch($scope.operator){
+                case '+': $scope.result=$scope.num1 + $scope.num2
+                document.getElementById("res").value =$scope.result
+                        break
+                case '-': $scope.result=$scope.num1 - $scope.num2
+                        break
+                case '*': $scope.result=$scope.num1 * $scope.num2
+                        break
+                case '/': if($scope.num2==0){
+                    alert("Divide by zero error")}
+                    else{
+                        $scope.result=$scope.num1 / $scope.num2
+                    }
+                }
+            }        
+    });
+</script>
+
+</html>

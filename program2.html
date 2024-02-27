@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Angular JS Application to Display List of shoppingItems</title>
+    <script src="angular.min.js"></script>
+    
+</head>
+<body ng-app="myApp2">
+    <h2>Shopping list</h2>
+
+    <div ng-controller="Shopping">
+
+        <ol>
+            <li ng-repeat="eatable in shoppingItems">{{eatable}}</li>
+        </ol>
+
+        Enter an item to add: <input id="item" ng-model="item_name">&emsp;
+        <input type="button" value="Add" ng-click="addItem()"> <br> <br>
+
+        Select an item to remove:
+
+        <select id="sel_item" ng-model="deleteitem" ng-options="thing for thing in shoppingItems">
+        </select>&emsp;
+
+        <input type="button" value="Remove" ng-click="deleteItem()">
+    </div>
+    <script>
+        var human = angular.module("myApp2", []);
+        human.controller("Shopping", function($scope) {
+            $scope.shoppingItems = ["Mango", "Cabbage", "Apple","Spanich"];
+            $scope.addItem = function() {
+                if ($scope.item_name && $scope.shoppingItems.indexOf($scope.item_name) == -1) {
+                    $scope.shoppingItems.push($scope.item_name);
+                    $scope.item_name = "";
+                } else {
+                    if ($scope.item_name) {
+                        alert("This item already exists");
+                        document.getElementById("item").focus();
+                        return false;
+                    }
+                    else {
+                        alert("You didn't write the item_name");
+                        document.getElementById("item").focus();
+                        return false;
+                    }
+                }
+            };
+
+            $scope.deleteItem = function() {
+                if ($scope.shoppingItems.indexOf($scope.deleteitem) == -1) {
+                    alert("You didn't select the item");
+                    document.getElementById("item").focus();
+                    return false;
+                }
+                else {
+                    let idx = $scope.shoppingItems.indexOf($scope.deleteitem);
+                    $scope.shoppingItems.splice(idx, 1);
+                    $scope.deleteitem = "";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>CRUD</title>
+        <script src="angular.min.js"></script>
+    </head>
+    <body ng-app="myApp_7">
+        <h2>CRUD application to manage users</h2>
+        <div ng-controller="ManageUsersCtrlr">
+            Enter your name:<input type="text" id="hesaru" ng-model="myName"/> &emsp;
+            Enter your email:<input type="email" id="mailid" ng-model="myEmailid"/> &emsp;&emsp;
+            <input type="button" value="Create" class="createuserbtn" ng-click="create_user()"/><br><br>
+            <ul>
+                <li ng-repeat="user in users">
+                    <span ng-show="!user.editing">{{user.name}}</span>
+                    <input ng-show="user.editing" id="new_hesaru" ng-model="user.name"/> &emsp;
+
+                    <span ng-show="!user.editing">{{user.email}}</span>
+                    <input type="email" ng-show="user.editing" id="new_mailid" ng-model="user.email"/> &emsp;
+
+                    <input type="button" value="Read" id="btnread" ng-click="view_user_details(user)"/>&emsp;
+                    <input type="button" value="Update" id="btnupd" ng-click="update_user_details(user)"/>&emsp;
+                    <input type="button" value="Delete" id="btndelete" ng-click="remove_user(user)"/>&emsp;
+                    
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
+
+<script>
+    var manage = angular.module("myApp_7",[]);
+    manage.controller("ManageUsersCtrlr",function($scope){
+        $scope.users = [];
+        $scope.create_user=function()
+        {
+            if($scope.myName==null)
+            {
+                alert("please enter your name");
+                document.getElementById("hesaru").focus();
+                return false;
+            }
+            else if($scope.myEmailid==null)
+            {
+                alert("please enter your email");
+                document.getElementById("mailid").focus();
+                return false;
+            }
+            else
+            {
+                var userdata = { "name": $scope.myName, "email" : $scope.myEmailid,'editing':false };
+
+                if(userdata.name == "")
+                {
+                    alert("please enter your name");
+                document.getElementById("hesaru").focus();
+                return false; 
+                }
+                else if(userdata.email == "")
+            {
+                alert("please enter your email");
+                document.getElementById("mailid").focus();
+                return false;
+            }
+                else
+                {
+                    $scope.users.push(userdata);
+                    $scope.myName=""
+                    $scope.myEmailid=""
+                }
+            }
+        }
+        
+        $scope.view_user_details=function(userdets)
+        {
+            userdets.editing=true;
+        }
+        
+        $scope.update_user_details=function(userdets)
+        {
+            if(userdets.name=="")
+            {
+                alert("please enter your name");
+                document.getElementById("hesaru").focus();
+                return false; 
+            }
+            else if(userdets.email=="")
+            {
+                alert("please enter your email");
+                document.getElementById("mailid").focus();
+                return false;
+            }
+            else
+            userdets.editing=false;   
+        }
+
+        $scope.remove_user=function(userdets)
+        {
+            var doublecheck = confirm("are you sure"+userdets.name+"?");
+            if(doublecheck == true)
+            {
+            var idx = $scope.users.indexOf(userdets);
+            $scope.users.splice(idx,1);
+            }
+            else{
+                alert("you chose not to remove this user");
+            }
+        }
+    });
+</script>
